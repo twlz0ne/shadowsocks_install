@@ -1,0 +1,11 @@
+# -*- mode: python; coding: utf-8 -*-
+
+# remote
+env.hosts = ['HOSTNAME']
+env.use_ssh_config = True
+
+# shadowsocks
+users = [
+    ["USER1", "PORT1", "SECRET1"],
+    ["USER2", "PORT2", "SECRET2"],
+]
