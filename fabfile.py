@@ -98,6 +98,9 @@ iptables -A INPUT -p tcp --dport 443 -j ACCEPT      # https
 iptables -A INPUT -p tcp --dport 1080 -j ACCEPT
 %(ss_user_rules)s
 
+# 扩展规则
+%(extra_rules)s
+
 # 允许已连接端口的后续数据包
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -108,7 +111,8 @@ iptables -A FORWARD -j REJECT
 
 # 保存新规则
 iptab_save''' % {
-    'ss_user_rules': '\n'.join(map(lambda (_, port, __): 'iptables -A INPUT -p tcp --dport %s -j ACCEPT' % int(port), users))
+    'ss_user_rules': '\n'.join(map(lambda (_, port, __): 'iptables -A INPUT -p tcp --dport %s -j ACCEPT' % int(port), users)),
+    'extra_rules': extra_rules
 }
 
 @task
