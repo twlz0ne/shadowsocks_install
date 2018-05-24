@@ -82,6 +82,9 @@ iptab_save() {
     esac
 }
 
+[[ -z $(systemctl list-unit-files | grep iptables) ]] && yum install -y iptables-services
+systemctl enable iptables
+
 # 备份&清除旧规则
 dtime=$(date +"%%Y-%%m-%%d_%%H.%%M.%%S")
 iptab_save .$dtime
